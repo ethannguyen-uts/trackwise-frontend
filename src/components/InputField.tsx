@@ -9,8 +9,7 @@ type InputFieldProps = {
 } & InputHTMLAttributes<HTMLInputElement>
 
 const InputField: React.FC<InputFieldProps> = (props) => {
-  const [field, { error }] = useField(props)
-  console.log(field.name, ':', error)
+  const [field, { error }, {}] = useField(props)
   return (
     <div className="mb-6 md:flex md:items-center">
       <div className="md:w-1/3">

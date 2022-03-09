@@ -20,6 +20,17 @@ export type ChangePasswordInput = {
   token: Scalars['String'];
 };
 
+export type FieldError = {
+  __typename?: 'FieldError';
+  error?: Maybe<Scalars['String']>;
+};
+
+export type LoginResponse = {
+  __typename?: 'LoginResponse';
+  errors?: Maybe<Array<FieldError>>;
+  user?: Maybe<User>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   changePassword?: Maybe<User>;
@@ -27,9 +38,9 @@ export type Mutation = {
   createProduct: Product;
   createUser: User;
   forgotPassword: Scalars['Boolean'];
-  login?: Maybe<User>;
+  login: LoginResponse;
   logout: Scalars['Boolean'];
-  register: User;
+  register: RegisterResponse;
 };
 
 
@@ -59,8 +70,8 @@ export type MutationForgotPasswordArgs = {
 
 
 export type MutationLoginArgs = {
-  email: Scalars['String'];
   password: Scalars['String'];
+  username: Scalars['String'];
 };
 
 
@@ -96,6 +107,12 @@ export type RegisterInput = {
   username: Scalars['String'];
 };
 
+export type RegisterResponse = {
+  __typename?: 'RegisterResponse';
+  errors?: Maybe<Array<FieldError>>;
+  user?: Maybe<User>;
+};
+
 export type User = {
   __typename?: 'User';
   email: Scalars['String'];
@@ -106,22 +123,54 @@ export type User = {
   username: Scalars['String'];
 };
 
+export type LoginMutationVariables = Exact<{
+  username: Scalars['String'];
+  password: Scalars['String'];
+}>;
+
+
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginResponse', errors?: Array<{ __typename?: 'FieldError', error?: string | null }> | null, user?: { __typename?: 'User', firstName: string, lastName: string, username: string, email: string } | null } };
+
 export type RegisterMutationVariables = Exact<{
   data: RegisterInput;
 }>;
 
 
-export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'User', firstName: string, lastName: string, username: string, name: string, email: string } };
+export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'RegisterResponse', errors?: Array<{ __typename?: 'FieldError', error?: string | null }> | null, user?: { __typename?: 'User', firstName: string, lastName: string, username: string, name: string, email: string } | null } };
 
 
+export const LoginDocument = gql`
+    mutation Login($username: String!, $password: String!) {
+  login(username: $username, password: $password) {
+    errors {
+      error
+    }
+    user {
+      firstName
+      lastName
+      username
+      email
+    }
+  }
+}
+    `;
+
+export function useLoginMutation() {
+  return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
+};
 export const RegisterDocument = gql`
     mutation Register($data: RegisterInput!) {
   register(data: $data) {
-    firstName
-    lastName
-    username
-    name
-    email
+    errors {
+      error
+    }
+    user {
+      firstName
+      lastName
+      username
+      name
+      email
+    }
   }
 }
     `;

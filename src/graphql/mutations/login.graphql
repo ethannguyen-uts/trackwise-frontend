@@ -1,5 +1,5 @@
-mutation Register($data: RegisterInput!) {
-  register(data: $data) {
+mutation Login($username: String!, $password: String!) {
+  login(username: $username, password: $password) {
     errors {
       error
     }
@@ -7,7 +7,6 @@ mutation Register($data: RegisterInput!) {
       firstName
       lastName
       username
-      name
       email
     }
   }
