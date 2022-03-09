@@ -4,21 +4,14 @@ import InputField from '../components/InputField'
 import { Wrapper } from '../components/layout/Wrapper'
 import LoadingIcon from '../components/layout/LoadingIcon'
 import { useMutation } from 'urql'
+import { useRegisterMutation } from '../generated/graphql'
+import { toErrorMap } from '../utils/toErrorMap'
+import { GraphQLError } from 'graphql'
 
 interface registerProps {}
 
-const REGISTER_MUTATION: string = `mutation Register($data: RegisterInput!) {
-    register(data: $data) {
-      firstName,
-      lastName, 
-      username,
-      name,
-      email
-    }
-  }`
-
 export const Register: React.FC<registerProps> = ({}) => {
-  const [{}, register] = useMutation(REGISTER_MUTATION)
+  const [{}, register] = useRegisterMutation()
 
   return (
     <Formik
@@ -29,8 +22,19 @@ export const Register: React.FC<registerProps> = ({}) => {
         email: '',
         password: '',
       }}
-      onSubmit={async (values) => {
-        const response = await register(values)
+      onSubmit={async (values, { setErrors }) => {
+        const response = await register({ data: { ...values } })
+        const validationErrorsResponse = response.error?.graphQLErrors.find(
+          (item) => {
+            const validateHint = item.extensions.exception as unknown as any
+            if (validateHint.validationErrors) return item
+          }
+        )
+        if (validationErrorsResponse) {
+          const validationErrors = toErrorMap(validationErrorsResponse)
+          console.log(validationErrors)
+          setErrors(validationErrors)
+        }
       }}
     >
       {({ isSubmitting, handleChange }) => {
@@ -38,11 +42,15 @@ export const Register: React.FC<registerProps> = ({}) => {
           <Wrapper>
             <Form>
               <InputField
-                name="firstname"
+                name="firstName"
                 label="First name"
                 type="text"
               ></InputField>
-              <InputField name="lastname" label="Last" type="text"></InputField>
+              <InputField
+                name="lastName"
+                label="Last Name"
+                type="text"
+              ></InputField>
               <InputField name="email" label="Email" type="text"></InputField>
               <InputField
                 name="username"
