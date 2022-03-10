@@ -4,11 +4,7 @@ mutation Register($data: RegisterInput!) {
       error
     }
     user {
-      firstName
-      lastName
-      username
-      name
-      email
+      ...UserFragment
     }
   }
 }

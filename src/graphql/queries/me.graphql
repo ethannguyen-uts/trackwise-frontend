@@ -1,10 +1,5 @@
 query Me {
   me {
-    id
-    username
-    email
-    firstName
-    lastName
-    name
+    ...UserFragment
   }
 }

@@ -7,10 +7,10 @@ interface navbarProps {}
 const Navbar: React.FC<navbarProps> = ({}) => {
   const [{ data, fetching }] = useMeQuery()
   console.log(data)
-  const [{}, logout] = useLogoutMutation()
+  const [{ fetching: logoutFetching }, logout] = useLogoutMutation()
 
   const handleLogout = async () => {
-    //const response = await logout()
+    await logout()
     //if(response.data?.logout)
   }
   let body = null
