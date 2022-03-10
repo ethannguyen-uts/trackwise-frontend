@@ -4,7 +4,7 @@ import InputField from '../components/InputField'
 import { Wrapper } from '../components/layout/Wrapper'
 import LoadingIcon from '../components/layout/LoadingIcon'
 import { useLoginMutation } from '../generated/graphql'
-import { toErrorMap } from '../utils/toErrorMap'
+
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
@@ -21,7 +21,7 @@ export const Register: React.FC<registerProps> = ({}) => {
         username: '',
         password: '',
       }}
-      onSubmit={async (values, { setErrors }) => {
+      onSubmit={async (values) => {
         const response = await login({ ...values })
         if (response.data?.login.errors) {
           setError(response.data?.login.errors[0].error as string)
