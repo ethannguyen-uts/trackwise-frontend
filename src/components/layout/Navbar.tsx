@@ -1,13 +1,16 @@
 import React, { Fragment } from 'react'
 import NextLink from 'next/link'
 import { useLogoutMutation, useMeQuery } from '../../generated/graphql'
+import { isServer } from '../../utils/isServer'
 
 interface navbarProps {}
 
 const Navbar: React.FC<navbarProps> = ({}) => {
-  const [{ data, fetching }] = useMeQuery()
-  console.log(data)
-  const [{ fetching: logoutFetching }, logout] = useLogoutMutation()
+  const [{ data, fetching }] = useMeQuery({
+    pause: isServer(),
+  })
+
+  const [, logout] = useLogoutMutation()
 
   const handleLogout = async () => {
     await logout()

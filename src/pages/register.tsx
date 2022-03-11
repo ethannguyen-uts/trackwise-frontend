@@ -6,6 +6,9 @@ import LoadingIcon from '../components/layout/LoadingIcon'
 import { useRegisterMutation } from '../generated/graphql'
 import { toErrorMap } from '../utils/toErrorMap'
 import { useRouter } from 'next/router'
+import { withUrqlClient } from 'next-urql'
+import { createUrqlClient } from '../utils/createUrqlClient'
+import { getGraphqlErrors } from '../utils/getGraphQLErrors'
 
 interface registerProps {}
 
@@ -24,19 +27,18 @@ export const Register: React.FC<registerProps> = ({}) => {
       }}
       onSubmit={async (values, { setErrors }) => {
         const response = await register({ data: { ...values } })
-        if (response.error) {
-          const validationErrorsResponse = response.error.graphQLErrors.find(
-            (item) => {
-              const validateHint = item.extensions.exception as unknown as any
-              if (validateHint.validationErrors) return item
-            }
-          )
-          if (validationErrorsResponse) {
-            const validationErrors = toErrorMap(validationErrorsResponse)
-            setErrors(validationErrors)
-          }
-        } else if (response.data?.register) {
-          //worked
+        //handle errors
+        if (response.error?.graphQLErrors) {
+          const graphqlErrors = getGraphqlErrors(response.error?.graphQLErrors)
+          if (graphqlErrors) setErrors(graphqlErrors)
+          return
+        }
+        if (response.data?.register.errors) {
+          setErrors(toErrorMap(response.data.register.errors))
+          return
+        }
+        //worked
+        if (response.data?.register.user) {
           router.push('/login')
         }
       }}
@@ -81,4 +83,4 @@ export const Register: React.FC<registerProps> = ({}) => {
   )
 }
 
-export default Register
+export default withUrqlClient(createUrqlClient)(Register)

@@ -17,6 +17,11 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "../space-backend/src/modules/constants/constants.ts"
+  ],
   "exclude": ["node_modules"]
 }
