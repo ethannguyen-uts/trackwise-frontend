@@ -5,7 +5,7 @@ import {
   stringifyVariables,
   Exchange,
 } from 'urql'
-import { cacheExchange, Resolver } from '@urql/exchange-graphcache'
+import { Cache, cacheExchange, Resolver } from '@urql/exchange-graphcache'
 import {
   LogoutMutation,
   MeQuery,
@@ -110,14 +110,8 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
 
             createPost: (_result, args, cache, info) => {
               //console.log(cache.inspectFields('Query'))
-              const allFields = cache.inspectFields('Query')
-              const fieldInfos = allFields.filter(
-                (info) => info.fieldName === 'posts'
-              )
-              fieldInfos.forEach((fi) => {
-                cache.invalidate('Query', 'posts', fi.arguments || {})
-                //console.log(cache.inspectFields('Query'))
-              })
+              invalidateAllPosts(cache)
+              //console.log(cache.inspectFields('Query'))
             },
 
             logout: (_result, args, cache, info) => {
@@ -142,7 +136,9 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
                     }
                   }
                 }
-              )
+              ),
+                //reset cache to reload all posts
+                invalidateAllPosts(cache)
             },
             register: (_result, args, cache, info) => {
               typeUpdateQueryFn<RegisterMutation, MeQuery>(
@@ -243,4 +239,13 @@ export const cursorPagination = (): Resolver => {
       posts: results,
     }
   }
+}
+
+//invalidate all post
+export const invalidateAllPosts = (cache: Cache) => {
+  const allFields = cache.inspectFields('Query')
+  const fieldInfos = allFields.filter((info) => info.fieldName === 'posts')
+  fieldInfos.forEach((fi) => {
+    cache.invalidate('Query', 'posts', fi.arguments || {})
+  })
 }
