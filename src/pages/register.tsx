@@ -30,8 +30,10 @@ export const Register: React.FC<registerProps> = ({}) => {
         //handle errors
         if (response.error?.graphQLErrors) {
           const graphqlErrors = getGraphqlErrors(response.error?.graphQLErrors)
-          if (graphqlErrors) setErrors(graphqlErrors)
-          return
+          if (graphqlErrors) {
+            setErrors(graphqlErrors)
+            return
+          }
         }
         if (response.data?.register.errors) {
           setErrors(toErrorMap(response.data.register.errors))
@@ -69,7 +71,7 @@ export const Register: React.FC<registerProps> = ({}) => {
                 type="password"
               ></InputField>
               <button
-                className="flex rounded bg-blue-500 py-2 px-4 text-white hover:bg-blue-700"
+                className="m-auto flex rounded bg-blue-500 py-2 px-4 text-white hover:bg-blue-700"
                 type="submit"
               >
                 {isSubmitting ? <LoadingIcon /> : null}

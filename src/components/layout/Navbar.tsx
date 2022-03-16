@@ -2,19 +2,24 @@ import React, { Fragment } from 'react'
 import NextLink from 'next/link'
 import { useLogoutMutation, useMeQuery } from '../../generated/graphql'
 import { isServer } from '../../utils/isServer'
+import { useRouter } from 'next/router'
 
 interface navbarProps {}
 
 const Navbar: React.FC<navbarProps> = ({}) => {
+  const router = useRouter()
   const [{ data, fetching }] = useMeQuery({
     pause: isServer(),
+    //now we only do meQuery on browser
+    //stop sending request when it is on next js server because when i write this code the nextjs server does not send the cookie, we will add forward cookie to next js server later
   })
 
   const [, logout] = useLogoutMutation()
 
   const handleLogout = async () => {
     await logout()
-    //if(response.data?.logout)
+    router.reload()
+    //reload the page
   }
   let body = null
   if (fetching) {
