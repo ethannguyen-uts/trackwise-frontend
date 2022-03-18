@@ -1,0 +1,10 @@
+fragment ProductFragment on Product {
+  id
+  name
+  imageUrl
+  scrapePrice
+  currentPrice
+  targetPrice
+  status
+  userId
+}

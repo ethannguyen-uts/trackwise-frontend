@@ -1,0 +1,5 @@
+mutation AddProduct($url: String!) {
+  addProduct(url: $url) {
+    ...ProductFragment
+  }
+}

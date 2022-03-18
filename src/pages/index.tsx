@@ -6,13 +6,18 @@ import { usePostsQuery } from '../generated/graphql'
 import Post from '../components/Post'
 import Link from 'next/link'
 import LoadingIcon from '../components/layout/LoadingIcon'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 
 const Home: NextPage = () => {
   const [variables, setVariables] = useState({ limit: 15, cursor: null })
   const [{ data, fetching }] = usePostsQuery({
     variables,
   })
+  const router = useRouter()
+  useEffect(() => {
+    router.push('/products')
+  }, [router])
 
   if (!fetching && !data) {
     return <div>No data</div>

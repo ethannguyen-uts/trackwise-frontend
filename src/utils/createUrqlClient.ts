@@ -43,7 +43,7 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
   //this function also run on next js server one time
   let cookie = ''
   if (isServer()) {
-    cookie = ctx.req.headers.cookie
+    cookie = ctx?.req?.headers.cookie
   }
   return {
     url: 'http://localhost:4000/graphql',
@@ -106,6 +106,16 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
                   { id: postId, points: newPoints, voteStatus: value }
                 )
               }
+            },
+
+            addProduct: (_result, args, cache, info) => {
+              const allFields = cache.inspectFields('Query')
+              const fieldInfos = allFields.filter(
+                (info) => info.fieldName === 'products'
+              )
+              fieldInfos.forEach((fi) => {
+                cache.invalidate('Query', 'products', fi.arguments)
+              })
             },
 
             createPost: (_result, args, cache, info) => {
@@ -247,5 +257,16 @@ export const invalidateAllPosts = (cache: Cache) => {
   const fieldInfos = allFields.filter((info) => info.fieldName === 'posts')
   fieldInfos.forEach((fi) => {
     cache.invalidate('Query', 'posts', fi.arguments || {})
+  })
+}
+
+//invalidate all products
+export const invalidateAllProducts = (cache: Cache) => {
+  const allFields = cache.inspectFields('Query')
+  const fieldInfos = allFields.filter((info) => info.fieldName === 'products')
+
+  fieldInfos.forEach((fi) => {
+    console.log(fi)
+    cache.invalidate('Query', 'products', fi.arguments || {})
   })
 }

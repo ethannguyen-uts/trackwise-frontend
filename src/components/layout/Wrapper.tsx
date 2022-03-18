@@ -9,7 +9,7 @@ export const Wrapper: React.FC<WrapperInputProps> = (props) => {
       <header>
         <Navbar />
       </header>
-      <main className="mx-auto mt-8 w-full max-w-xl">{props.children}</main>
+      <main className="mx-auto mt-8 w-full max-w-6xl">{props.children}</main>
     </Fragment>
   )
 }
