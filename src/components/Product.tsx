@@ -1,14 +1,28 @@
 import React from 'react'
-import { ProductFragmentFragment } from '../generated/graphql'
+import {
+  ProductFragmentFragment,
+  useDeleteProductMutation,
+} from '../generated/graphql'
 
 interface ProductProps {
   product: ProductFragmentFragment
+  onDelete: (name: string) => void
 }
 
-export const Product: React.FC<ProductProps> = ({ product }) => {
+export const Product: React.FC<ProductProps> = (props) => {
+  const { product } = props
+  const [, deleteProduct] = useDeleteProductMutation()
+  const handleDeleteProduct = () => {
+    deleteProduct({ id: product.id })
+    props.onDelete(product.name)
+  }
+
   return (
     <div className="flex-column relative flex flex-wrap justify-center border-2 shadow-md">
-      <button className="absolute left-5 top-5 bg-red-400 px-2 hover:bg-red-600">
+      <button
+        onClick={handleDeleteProduct}
+        className="absolute left-3 top-3 rounded-sm bg-red-400 px-2 text-white hover:bg-red-600"
+      >
         X
       </button>
       <div className="flex flex-row flex-wrap justify-center p-5">
@@ -19,15 +33,22 @@ export const Product: React.FC<ProductProps> = ({ product }) => {
         ></img>
       </div>
       <div className="px-3 py-2">
-        <h2 className="mb-3 h-20 text-lg font-bold">{product.name}</h2>
-        <h3>Scrape price: {product.scrapePrice}</h3>
-        <h3>Current price: {product.scrapePrice}</h3>
-        <label>Target price: </label>
-        <input
-          className="w-1/3 bg-yellow-100 text-right"
-          type="text"
-          value={product.targetPrice}
-        />
+        <h2 className="mb-2 h-20 text-lg font-bold">{product.name}</h2>
+        <div className="grid grid-cols-4 gap-1">
+          <label className="col-span-2">Scrape price: </label>
+          <span className="text-right">{product.scrapePrice}</span>
+          <span className="col-span-2">Current price:</span>
+          <span className="text-right">{product.currentPrice}</span>
+          <label className="col-span-2">Target price ($): </label>
+          <input
+            className="bg-yellow-100 text-right"
+            type="text"
+            value={product.targetPrice}
+          />
+          <button className="flex items-center justify-center rounded-sm bg-blue-400 px-2 text-xs text-white hover:bg-blue-600">
+            Update
+          </button>
+        </div>
       </div>
     </div>
   )

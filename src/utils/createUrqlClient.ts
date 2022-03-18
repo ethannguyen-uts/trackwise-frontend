@@ -13,6 +13,7 @@ import {
   LoginMutation,
   RegisterMutation,
   VoteMutationVariables,
+  DeleteProductMutationVariables,
 } from '../generated/graphql'
 import { typeUpdateQueryFn } from './typeUpdateQueryFn'
 import { pipe, tap } from 'wonka'
@@ -115,6 +116,13 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
               )
               fieldInfos.forEach((fi) => {
                 cache.invalidate('Query', 'products', fi.arguments)
+              })
+            },
+
+            deleteProduct: (_result, args, cache, info) => {
+              cache.invalidate({
+                __typename: 'Product',
+                id: (args as DeleteProductMutationVariables).id,
               })
             },
 
