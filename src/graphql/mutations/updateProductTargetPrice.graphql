@@ -1,0 +1,5 @@
+mutation UpdateProductTargetPrice($targetPrice: Float!, $id: ID!) {
+  updateProductTargetPrice(targetPrice: $targetPrice, id: $id) {
+    ...ProductFragment
+  }
+}

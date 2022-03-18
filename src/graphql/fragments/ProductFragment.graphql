@@ -1,6 +1,7 @@
 fragment ProductFragment on Product {
   id
   name
+  url
   imageUrl
   scrapePrice
   currentPrice

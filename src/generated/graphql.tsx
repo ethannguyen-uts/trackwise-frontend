@@ -54,6 +54,7 @@ export type Mutation = {
   logout: Scalars['Boolean']
   register: RegisterResponse
   updatePost: Post
+  updateProductTargetPrice: Product
   vote: Scalars['Boolean']
 }
 
@@ -101,6 +102,11 @@ export type MutationRegisterArgs = {
 export type MutationUpdatePostArgs = {
   id: Scalars['Int']
   title: Scalars['String']
+}
+
+export type MutationUpdateProductTargetPriceArgs = {
+  id: Scalars['ID']
+  targetPrice: Scalars['Float']
 }
 
 export type MutationVoteArgs = {
@@ -241,6 +247,7 @@ export type ProductFragmentFragment = {
   __typename?: 'Product'
   id: string
   name: string
+  url: string
   imageUrl: string
   scrapePrice: number
   currentPrice: number
@@ -269,6 +276,7 @@ export type AddProductMutation = {
     __typename?: 'Product'
     id: string
     name: string
+    url: string
     imageUrl: string
     scrapePrice: number
     currentPrice: number
@@ -385,6 +393,27 @@ export type RegisterMutation = {
   }
 }
 
+export type UpdateProductTargetPriceMutationVariables = Exact<{
+  targetPrice: Scalars['Float']
+  id: Scalars['ID']
+}>
+
+export type UpdateProductTargetPriceMutation = {
+  __typename?: 'Mutation'
+  updateProductTargetPrice: {
+    __typename?: 'Product'
+    id: string
+    name: string
+    url: string
+    imageUrl: string
+    scrapePrice: number
+    currentPrice: number
+    targetPrice: number
+    status: string
+    userId: string
+  }
+}
+
 export type VoteMutationVariables = Exact<{
   postId: Scalars['ID']
   value: Scalars['Int']
@@ -449,6 +478,7 @@ export type ProductsQuery = {
     __typename?: 'Product'
     id: string
     name: string
+    url: string
     imageUrl: string
     scrapePrice: number
     currentPrice: number
@@ -484,6 +514,7 @@ export const ProductFragmentFragmentDoc = gql`
   fragment ProductFragment on Product {
     id
     name
+    url
     imageUrl
     scrapePrice
     currentPrice
@@ -616,6 +647,21 @@ export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(
     RegisterDocument
   )
+}
+export const UpdateProductTargetPriceDocument = gql`
+  mutation UpdateProductTargetPrice($targetPrice: Float!, $id: ID!) {
+    updateProductTargetPrice(targetPrice: $targetPrice, id: $id) {
+      ...ProductFragment
+    }
+  }
+  ${ProductFragmentFragmentDoc}
+`
+
+export function useUpdateProductTargetPriceMutation() {
+  return Urql.useMutation<
+    UpdateProductTargetPriceMutation,
+    UpdateProductTargetPriceMutationVariables
+  >(UpdateProductTargetPriceDocument)
 }
 export const VoteDocument = gql`
   mutation Vote($postId: ID!, $value: Int!) {
