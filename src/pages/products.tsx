@@ -35,17 +35,17 @@ const Products: NextPage = ({}) => {
   return (
     <Wrapper>
       <form
-        className="flex flex-row content-center items-center justify-center"
+        className=" flex w-full flex-row content-center items-center justify-center pt-16"
         onSubmit={formik.handleSubmit}
       >
         <div className="basis-5/6">
           <label className="relative block">
-            <span className="sr-only">Search</span>
+            <span className="sr-only">Scrape</span>
             <input
               type="text"
-              className="form-control relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-1.5 text-base font-normal text-gray-700 transition ease-in-out focus:border-blue-600 focus:bg-white focus:text-gray-700 focus:outline-none"
-              placeholder="Search"
-              aria-label="Search"
+              className="form-control w-full appearance-none rounded-l border-2 border-moon bg-moon py-1.5 px-3 leading-tight focus:border-coral focus:bg-white focus:outline-none"
+              placeholder="Enter product url ..."
+              aria-label="Scrape"
               aria-describedby="button-addon3"
               name="url"
               id="url"
@@ -55,7 +55,7 @@ const Products: NextPage = ({}) => {
           </label>
         </div>
         <button
-          className="mx-auto box-border flex w-16 justify-center rounded bg-blue-500 py-2 px-4 text-center text-sm text-white hover:bg-blue-700"
+          className="box-border flex w-16 justify-center rounded-r bg-sky py-2 px-4 text-center text-sm text-white hover:bg-blueberry"
           type="submit"
         >
           {formik.isSubmitting ? <LoadingIcon /> : null}
@@ -67,9 +67,9 @@ const Products: NextPage = ({}) => {
         <label className="block text-center text-red-600">{error}</label>
       )}
       {message && (
-        <label className="block text-center text-blue-400">{message}</label>
+        <label className="text-blue-400 block text-center">{message}</label>
       )}
-      <div className="mx-10 mt-12 grid grid-cols-1 gap-10  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="mx-10 mt-10 grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {data
           ? data.products.map((product) => (
               <Product

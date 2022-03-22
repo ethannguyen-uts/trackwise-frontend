@@ -48,36 +48,39 @@ export const Register: React.FC<registerProps> = ({}) => {
       {({ isSubmitting }) => {
         return (
           <Wrapper>
-            <Form>
-              <InputField
-                name="firstName"
-                label="First name"
-                type="text"
-              ></InputField>
-              <InputField
-                name="lastName"
-                label="Last Name"
-                type="text"
-              ></InputField>
-              <InputField name="email" label="Email" type="text"></InputField>
-              <InputField
-                name="username"
-                label="Username"
-                type="text"
-              ></InputField>
-              <InputField
-                name="password"
-                label="Password"
-                type="password"
-              ></InputField>
-              <button
-                className="m-auto flex rounded bg-blue-500 py-2 px-4 text-white hover:bg-blue-700"
-                type="submit"
-              >
-                {isSubmitting ? <LoadingIcon /> : null}
-                {isSubmitting ? 'Loading' : 'Register'}
-              </button>
-            </Form>
+            <div className="flex h-full w-full flex-row items-center justify-center bg-whitebg px-2">
+              <Form className="w-full md:w-8/12" autoComplete="off">
+                <h1 className="text-center text-xl text-grape">Sign up</h1>
+                <InputField
+                  name="firstName"
+                  label="First name"
+                  type="text"
+                ></InputField>
+                <InputField
+                  name="lastName"
+                  label="Last Name"
+                  type="text"
+                ></InputField>
+                <InputField name="email" label="Email" type="text"></InputField>
+                <InputField
+                  name="username"
+                  label="Username"
+                  type="text"
+                ></InputField>
+                <InputField
+                  name="password"
+                  label="Password"
+                  type="password"
+                ></InputField>
+                <button
+                  className="m-auto flex w-full justify-center rounded bg-coral py-1 text-white hover:bg-grape "
+                  type="submit"
+                >
+                  {isSubmitting ? <LoadingIcon /> : null}
+                  {isSubmitting ? 'Loading' : 'Sign up'}
+                </button>
+              </Form>
+            </div>
           </Wrapper>
         )
       }}

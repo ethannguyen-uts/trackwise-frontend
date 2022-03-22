@@ -9,7 +9,6 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { withUrqlClient } from 'next-urql'
 import { createUrqlClient } from '../utils/createUrqlClient'
-import { type } from 'os'
 
 interface registerProps {}
 
@@ -39,29 +38,32 @@ export const Login: React.FC<registerProps> = ({}) => {
       {({ isSubmitting }) => {
         return (
           <Wrapper>
-            <Form>
-              <InputField
-                name="username"
-                label="Username"
-                type="text"
-              ></InputField>
-              <InputField
-                name="password"
-                label="Password"
-                type="password"
-              ></InputField>
-              <div className="block text-right underline">
-                <Link href="/forgot-password">Forgot password?</Link>
-              </div>
-              {error && <label className="text-red-600">{error}</label>}
-              <button
-                className="m-auto flex rounded bg-blue-500 py-2 px-4 text-white hover:bg-blue-700"
-                type="submit"
-              >
-                {isSubmitting ? <LoadingIcon /> : null}
-                {isSubmitting ? 'Loading' : 'Login'}
-              </button>
-            </Form>
+            <div className="flex h-full w-full flex-row items-center justify-center bg-whitebg px-2">
+              <Form className="w-full md:w-8/12">
+                <h1 className="text-center text-xl text-grape">Login</h1>
+                <InputField
+                  name="username"
+                  label="Username"
+                  type="text"
+                ></InputField>
+                <InputField
+                  name="password"
+                  label="Password"
+                  type="password"
+                ></InputField>
+                <div className=" mb-2 block w-full text-right text-sm text-coral hover:underline">
+                  <Link href="/forgot-password">Forgot password?</Link>
+                </div>
+                {error && <label className="text-red-600">{error}</label>}
+                <button
+                  className="flex w-full justify-center rounded bg-coral py-1 text-white hover:bg-grape"
+                  type="submit"
+                >
+                  {isSubmitting ? <LoadingIcon /> : null}
+                  {isSubmitting ? 'Loading' : 'Login'}
+                </button>
+              </Form>
+            </div>
           </Wrapper>
         )
       }}

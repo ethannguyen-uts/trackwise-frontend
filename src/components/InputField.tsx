@@ -13,33 +13,35 @@ type InputFieldProps = {
 const InputField: React.FC<InputFieldProps> = (props) => {
   const [field, { error }, {}] = useField(props)
   return (
-    <div className="mb-6 md:flex md:items-center">
-      <div className="md:w-1/3">
+    <div className="mb-6 flex flex-col items-center">
+      <div className="mb-1 w-full">
         <label
-          className="mb-1 block pr-4 font-bold text-gray-500 md:mb-0 md:text-right"
+          className="text-gray-500 block pr-4 text-sm font-bold md:mb-0 md:text-left"
           htmlFor={field.name}
         >
           {props.label}
         </label>
       </div>
-      <div className="md:w-2/3">
+      <div className="w-full">
         {props.istextarea == 'true' ? (
           <textarea
-            className="w-full appearance-none rounded border-2 border-gray-200 bg-gray-200 py-2 px-4 leading-tight text-gray-700 focus:border-purple-500 focus:bg-white focus:outline-none"
+            className="text-gray-700 w-full appearance-none rounded border-2 border-moon bg-moon py-1 px-3 leading-tight focus:border-coral focus:bg-white focus:outline-none"
             {...field}
             {...props}
             id={field.name}
           ></textarea>
         ) : (
           <input
-            className="w-full appearance-none rounded border-2 border-gray-200 bg-gray-200 py-2 px-4 leading-tight text-gray-700 focus:border-purple-500 focus:bg-white focus:outline-none"
+            className="text-gray-700 w-full appearance-none rounded border-2 border-moon bg-moon py-1 px-3 leading-tight focus:border-coral focus:bg-white focus:outline-none"
             {...field}
             {...props}
             id={field.name}
           />
         )}
 
-        {error ? <label className="bg-red-500">{error}</label> : null}
+        {error ? (
+          <label className="text-sm text-important">{error}</label>
+        ) : null}
       </div>
     </div>
   )

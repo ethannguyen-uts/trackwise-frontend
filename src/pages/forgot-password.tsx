@@ -45,19 +45,31 @@ export const ForgotPassword: React.FC<registerProps> = () => {
       {({ isSubmitting }) => {
         return (
           <Wrapper>
-            <Form>
-              <InputField name="email" label="Email" type="email"></InputField>
-              {responseMessage && (
-                <label className="text-green-400">{responseMessage}</label>
-              )}
-              <button
-                className="flex rounded bg-blue-500 py-2 px-4 text-white hover:bg-blue-700"
-                type="submit"
-              >
-                {isSubmitting ? <LoadingIcon /> : null}
-                {isSubmitting ? 'Loading' : 'Send Email'}
-              </button>
-            </Form>
+            <div className="pt-16">
+              <h2 className="text-center text-xl font-bold">
+                Getting back into your account
+              </h2>
+              <p className="text-center">
+                Tell us some information about your account
+              </p>
+              <Form className="mx-auto px-2 md:w-2/3">
+                <InputField
+                  name="email"
+                  label="Enter your email"
+                  type="email"
+                ></InputField>
+                {responseMessage && (
+                  <label className="text-green-400">{responseMessage}</label>
+                )}
+                <button
+                  className="m-auto flex w-1/6 justify-center rounded bg-coral py-1 text-white hover:bg-grape"
+                  type="submit"
+                >
+                  {isSubmitting ? <LoadingIcon /> : null}
+                  {isSubmitting ? 'Loading' : 'Continue'}
+                </button>
+              </Form>
+            </div>
           </Wrapper>
         )
       }}

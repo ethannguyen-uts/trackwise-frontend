@@ -18,7 +18,10 @@ const Navbar: React.FC<navbarProps> = ({}) => {
 
   const handleLogout = async () => {
     await logout()
-    router.reload()
+
+    await router.push('/')
+    await router.reload()
+
     //reload the page
   }
   let body = null
@@ -26,15 +29,15 @@ const Navbar: React.FC<navbarProps> = ({}) => {
   } else if (!data?.me) {
     body = (
       <Fragment>
-        <li className="mr-3 hover:bg-zinc-300">
+        <li className="mr-3 rounded-md bg-muted px-3 py-1 text-sm text-black hover:bg-moon">
           <NextLink href="/login">
             <a className="block no-underline">Login</a>
           </NextLink>
         </li>
-        <li className="mr-3 hover:bg-zinc-300">
+        <li className="mr-3 rounded-md bg-coral px-3 py-1 text-sm text-white hover:bg-grape">
           <NextLink href="/register">
             <a className="block no-underline" href="./">
-              Register
+              Sign up
             </a>
           </NextLink>
         </li>
@@ -43,20 +46,20 @@ const Navbar: React.FC<navbarProps> = ({}) => {
   } else {
     body = (
       <Fragment>
-        <li className="mr-3 hover:bg-zinc-300">
-          <NextLink href="/me">
+        <li className="mr-3 rounded-md bg-muted px-3 py-1 text-sm text-black hover:bg-moon">
+          <NextLink href="/">
             <a className="block no-underline">{data.me.username}</a>
           </NextLink>
         </li>
-        <li className="mr-3 hover:bg-zinc-300">
+        <li className="mr-3 rounded-md bg-coral px-3 py-1 text-sm text-white hover:bg-grape">
           <button onClick={handleLogout}>Logout</button>
         </li>
       </Fragment>
     )
   }
   return (
-    <nav>
-      <ul className="flex flex-row flex-wrap justify-end bg-yellow-300 py-4">
+    <nav className="fixed top-0 z-10 w-full bg-white">
+      <ul className="bg-yellow-300 flex flex-row flex-wrap justify-end py-2 shadow">
         {body}
       </ul>
     </nav>
