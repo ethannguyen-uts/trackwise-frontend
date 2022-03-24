@@ -25,14 +25,14 @@ const InputField: React.FC<InputFieldProps> = (props) => {
       <div className="w-full">
         {props.istextarea == 'true' ? (
           <textarea
-            className="text-gray-700 w-full appearance-none rounded border-2 border-moon bg-moon py-1 px-3 leading-tight focus:border-coral focus:bg-white focus:outline-none"
+            className="w-full appearance-none rounded border-2 border-moon bg-moon py-1 px-3 leading-tight focus:border-coral focus:bg-white focus:outline-none"
             {...field}
             {...props}
             id={field.name}
           ></textarea>
         ) : (
           <input
-            className="text-gray-700 w-full appearance-none rounded border-2 border-moon bg-moon py-1 px-3 leading-tight focus:border-coral focus:bg-white focus:outline-none"
+            className="w-full appearance-none rounded border-2 border-moon bg-moon py-1 px-3 leading-tight focus:border-coral focus:bg-white focus:outline-none"
             {...field}
             {...props}
             id={field.name}

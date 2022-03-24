@@ -69,7 +69,7 @@ const Products: NextPage = ({}) => {
       {message && (
         <label className="text-blue-400 block text-center">{message}</label>
       )}
-      <div className="mx-10 mt-10 grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="mx-2 mt-10 grid grid-cols-1 gap-10 sm:mx-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {data
           ? data.products.map((product) => (
               <Product

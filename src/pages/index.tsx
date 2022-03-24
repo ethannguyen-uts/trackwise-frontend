@@ -2,51 +2,43 @@ import type { NextPage } from 'next'
 import { withUrqlClient } from 'next-urql'
 import { Wrapper } from '../components/layout/Wrapper'
 import { createUrqlClient } from '../utils/createUrqlClient'
-import { usePostsQuery } from '../generated/graphql'
-import Post from '../components/Post'
-import Link from 'next/link'
-import LoadingIcon from '../components/layout/LoadingIcon'
-import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import { useMeQuery } from '../generated/graphql'
 
 const Home: NextPage = () => {
-  const [variables, setVariables] = useState({ limit: 15, cursor: null })
-  const [{ data, fetching }] = usePostsQuery({
-    variables,
-  })
+  const [{ data }] = useMeQuery()
   const router = useRouter()
-  useEffect(() => {
-    router.push('/products')
-  }, [router])
-
-  if (!fetching && !data) {
-    return <div>No data</div>
-  }
-
   return (
     <Wrapper>
-      <div className="flex flex-row items-center justify-end py-2">
-        <Link href="/create-post">Create Post</Link>
-      </div>
-      {!data && fetching ? (
-        <div>Loading</div>
-      ) : (
-        data!.posts.posts.map((post) => <Post key={post.id} post={post} />)
-      )}
-      {data && data.posts.hasMore && (
+      <div className="flex h-full flex-col flex-wrap content-center items-center justify-center pt-16">
+        <h1 className="mb-5 text-center font-serif text-6xl font-bold">
+          Shop and save money with On Track
+        </h1>
+        <h2 className="mx-2 font-serif">
+          On Track sets an alert on your favourite product & notifies you when
+          prices drop.
+        </h2>
         <button
-          onClick={() =>
-            setVariables({
-              limit: variables.limit,
-              cursor: data.posts.posts[data.posts.posts.length - 1].created_at,
-            })
-          }
-          className="mx-auto flex rounded bg-blue-500 py-2 px-4 text-white hover:bg-blue-700"
+          onClick={() => {
+            if (data?.me) router.push('./products')
+            else router.push('./login')
+          }}
+          className="mt-3 box-border flex justify-center rounded bg-sky py-1 px-4 text-center text-sm text-white hover:bg-blueberry"
+          type="submit"
         >
-          {fetching ? <LoadingIcon /> : null}
-          {fetching ? 'Loading' : 'Load more'}
+          Getting Started
         </button>
-      )}
+        <div className="mt-20 flex flex-col">
+          <h2 className="text-center font-serif text-2xl">Brand</h2>
+          <div className="rounded bg-red-200 p-2">
+            <img
+              alt="Woolworths brand"
+              className="h-16 w-full object-contain"
+              src="https://cdn0.woolworths.media/content/content/icon-header-logo.png"
+            />
+          </div>
+        </div>
+      </div>
     </Wrapper>
   )
 }

@@ -18,7 +18,6 @@ const Navbar: React.FC<navbarProps> = ({}) => {
 
   const handleLogout = async () => {
     await logout()
-
     await router.push('/')
     await router.reload()
 
@@ -47,7 +46,7 @@ const Navbar: React.FC<navbarProps> = ({}) => {
     body = (
       <Fragment>
         <li className="mr-3 rounded-md bg-muted px-3 py-1 text-sm text-black hover:bg-moon">
-          <NextLink href="/">
+          <NextLink href="/login">
             <a className="block no-underline">{data.me.username}</a>
           </NextLink>
         </li>
@@ -58,10 +57,19 @@ const Navbar: React.FC<navbarProps> = ({}) => {
     )
   }
   return (
-    <nav className="fixed top-0 z-10 w-full bg-white">
-      <ul className="bg-yellow-300 flex flex-row flex-wrap justify-end py-2 shadow">
-        {body}
-      </ul>
+    <nav className="fixed top-0 z-10 flex w-full flex-row items-center justify-between bg-white shadow">
+      <div className="ml-3 hover:cursor-pointer">
+        <NextLink href="/products">
+          <img
+            className="h-12 w-full object-contain pt-1.5"
+            src="/logo.png"
+            alt="logo"
+          />
+        </NextLink>
+      </div>
+      <div>
+        <ul className="flex flex-row flex-wrap justify-end py-2 ">{body}</ul>
+      </div>
     </nav>
   )
 }

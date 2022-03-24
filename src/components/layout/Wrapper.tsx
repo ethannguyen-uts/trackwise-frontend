@@ -9,8 +9,10 @@ export const Wrapper: React.FC<WrapperInputProps> = (props) => {
       <header>
         <Navbar />
       </header>
-      <main className="bg-blue mx-auto h-screen w-full max-w-6xl bg-whitebg">
-        {props.children}
+      <main className="max-full mx-auto h-screen bg-whitebg">
+        <div className="mx-auto h-full max-w-6xl bg-whitebg">
+          {props.children}
+        </div>
       </main>
     </Fragment>
   )

@@ -8,4 +8,5 @@ fragment ProductFragment on Product {
   targetPrice
   status
   userId
+  updated_at
 }
