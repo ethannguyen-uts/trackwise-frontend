@@ -24,6 +24,9 @@ const Products: NextPage = ({}) => {
       if (response.error) {
         setError(response.error.graphQLErrors[0].message)
       } else if (response.data?.addProduct) {
+        const product = response.data?.addProduct
+        setMessage(`Product ${product.name} has been added!`)
+        setTimeout(() => setMessage(''), 3000)
       }
     },
   })
@@ -32,6 +35,12 @@ const Products: NextPage = ({}) => {
     setMessage(`Product ${name} has been deleted!`)
     setTimeout(() => setMessage(''), 3000)
   }
+
+  const handleUpdateProduct = (name: string) => {
+    setMessage(`Product ${name} has been updated!`)
+    setTimeout(() => setMessage(''), 3000)
+  }
+
   return (
     <Wrapper>
       <form
@@ -67,7 +76,7 @@ const Products: NextPage = ({}) => {
         <label className="block text-center text-red-600">{error}</label>
       )}
       {message && (
-        <label className="text-blue-400 block text-center">{message}</label>
+        <label className="mx-2 block text-center text-success">{message}</label>
       )}
       <div className="mx-2 mt-10 grid grid-cols-1 gap-10 sm:mx-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {data
@@ -76,6 +85,7 @@ const Products: NextPage = ({}) => {
                 key={product.id}
                 product={product}
                 onDelete={handleDeleteProduct}
+                onUpdate={handleUpdateProduct}
               />
             ))
           : null}

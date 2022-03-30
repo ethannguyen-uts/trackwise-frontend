@@ -6,7 +6,7 @@ export const LoadingIcon: React.FC<LoadingIconProps> = ({}) => {
   return (
     <svg
       role="status"
-      className="h-5 w-5 animate-spin fill-white text-gray-200 dark:text-gray-600"
+      className="h-5 w-5 animate-spin fill-white text-muted dark:text-moon"
       viewBox="0 0 100 101"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

@@ -10,25 +10,30 @@ import LoadingIcon from './layout/LoadingIcon'
 interface ProductProps {
   product: ProductFragmentFragment
   onDelete: (name: string) => void
+  onUpdate: (name: string) => void
 }
 
 export const Product: React.FC<ProductProps> = (props) => {
   const { product } = props
   const [, deleteProduct] = useDeleteProductMutation()
   const [, updateTargetPrice] = useUpdateProductTargetPriceMutation()
-  const handleDeleteProduct = () => {
-    deleteProduct({ id: product.id })
+  const handleDeleteProduct = async () => {
+    await deleteProduct({ id: product.id })
     props.onDelete(product.name)
   }
   const formik = useFormik({
     initialValues: {
       targetPrice: product.targetPrice,
     },
-    onSubmit: (values) => {
-      return updateTargetPrice({
+    onSubmit: async (values) => {
+      const result = await updateTargetPrice({
         id: product.id,
         targetPrice: values.targetPrice,
       })
+      if (result.data?.updateProductTargetPrice)
+        props.onUpdate(result.data?.updateProductTargetPrice.name)
+
+      return result
     },
   })
 
@@ -76,7 +81,6 @@ export const Product: React.FC<ProductProps> = (props) => {
           <label className="basis-full font-serif">
             Original price: AUD {product.scrapePrice}
           </label>
-
           <label className="basis-full font-serif">
             Current Price: AUD {product.currentPrice}
           </label>
@@ -99,9 +103,9 @@ export const Product: React.FC<ProductProps> = (props) => {
             {formik.isSubmitting ? <LoadingIcon /> : null}
             {formik.isSubmitting
               ? ''
-              : product.status === 'scrapped'
+              : product.status === ('scrapped' || 'dropped')
               ? 'Track price'
-              : 'Get Latest Price'}
+              : 'Update price'}
           </button>
         </form>
       </div>

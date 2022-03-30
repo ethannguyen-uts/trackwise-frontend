@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Formik, Form } from 'formik'
 import InputField from '../components/InputField'
 import { Wrapper } from '../components/layout/Wrapper'
@@ -7,12 +7,13 @@ import { useForgotPasswordMutation } from '../generated/graphql'
 import { useState } from 'react'
 import { withUrqlClient } from 'next-urql'
 import { createUrqlClient } from '../utils/createUrqlClient'
-
+import { validateEmail } from '../utils/fieldValidation'
 interface registerProps {}
 
 export const ForgotPassword: React.FC<registerProps> = () => {
   const [{}, forgotPasswordMutation] = useForgotPasswordMutation()
   const [responseMessage, setResponseMessage] = useState('')
+  const [showInputForm, setShowInputForm] = useState(true)
 
   return (
     <Formik
@@ -28,47 +29,53 @@ export const ForgotPassword: React.FC<registerProps> = () => {
           setResponseMessage(
             'An email has been sent to you, please follow the instruction email to change your Password.'
           )
+          setShowInputForm(false)
         }
       }}
       validate={(values) => {
         const errors: { email?: string } = {}
-        if (!values.email) {
-          errors.email = 'Required'
-        } else if (
-          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-        ) {
-          errors.email = 'Invalid email address'
-        }
+        const emailError = validateEmail(values.email)
+        if (emailError) errors.email = emailError
         return errors
       }}
     >
-      {({ isSubmitting }) => {
+      {({ isSubmitting, values }) => {
         return (
           <Wrapper>
             <div className="pt-16">
               <h2 className="text-center text-xl font-bold">
                 Getting back into your account
               </h2>
-              <p className="text-center">
-                Tell us some information about your account
-              </p>
-              <Form className="mx-auto px-2 md:w-2/3">
-                <InputField
-                  name="email"
-                  label="Enter your email"
-                  type="email"
-                ></InputField>
-                {responseMessage && (
-                  <label className="text-green-400">{responseMessage}</label>
-                )}
-                <button
-                  className="m-auto flex w-1/6 justify-center rounded bg-coral py-1 text-white hover:bg-grape"
-                  type="submit"
-                >
-                  {isSubmitting ? <LoadingIcon /> : null}
-                  {isSubmitting ? 'Loading' : 'Continue'}
-                </button>
-              </Form>
+
+              {showInputForm && (
+                <Fragment>
+                  <p className="text-center">
+                    Tell us some information about your account
+                  </p>
+                  <Form className="mx-auto px-2 md:w-2/3">
+                    <InputField
+                      name="email"
+                      label="Enter your email"
+                      type="email"
+                    ></InputField>
+
+                    {!validateEmail(values.email) && (
+                      <button
+                        className="m-auto flex w-full justify-center rounded bg-coral py-1 text-white hover:bg-grape sm:w-1/6"
+                        type="submit"
+                      >
+                        {isSubmitting ? <LoadingIcon /> : null}
+                        {isSubmitting ? 'Loading' : 'Continue'}
+                      </button>
+                    )}
+                  </Form>
+                </Fragment>
+              )}
+              {responseMessage && (
+                <div className="text-center text-success">
+                  {responseMessage}
+                </div>
+              )}
             </div>
           </Wrapper>
         )

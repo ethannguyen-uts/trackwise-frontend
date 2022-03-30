@@ -9,12 +9,38 @@ import { useRouter } from 'next/router'
 import { withUrqlClient } from 'next-urql'
 import { createUrqlClient } from '../utils/createUrqlClient'
 import { getGraphqlErrors } from '../utils/getGraphQLErrors'
+import {
+  isEmptyString,
+  validateEmail,
+  validatePassword,
+  validateUsername,
+} from '../utils/fieldValidation'
 
 interface registerProps {}
+interface registerField {
+  firstName?: string
+  lastName?: string
+  username?: string
+  email?: string
+  password?: string
+}
 
 export const Register: React.FC<registerProps> = ({}) => {
   const router = useRouter()
   const [{}, register] = useRegisterMutation()
+
+  const validate = (values: registerField) => {
+    const errors: registerField = {}
+    if (!values.firstName) errors.firstName = 'Required'
+    if (!values.lastName) errors.lastName = 'Required'
+    const inputEmailError = validateEmail(values.email!)
+    if (inputEmailError) errors.email = inputEmailError
+    const inputUsernameError = validateUsername(values.username!)
+    if (inputUsernameError) errors.username = inputUsernameError
+    const inputPasswordError = validatePassword(values.password!)
+    if (inputPasswordError) errors.password = inputPasswordError
+    return errors
+  }
 
   return (
     <Formik
@@ -25,6 +51,7 @@ export const Register: React.FC<registerProps> = ({}) => {
         email: '',
         password: '',
       }}
+      validate={validate}
       onSubmit={async (values, { setErrors }) => {
         const response = await register({ data: { ...values } })
         //handle errors
@@ -70,7 +97,7 @@ export const Register: React.FC<registerProps> = ({}) => {
                 <InputField
                   name="password"
                   label="Password"
-                  type="password"
+                  type="text"
                 ></InputField>
                 <button
                   className="m-auto flex w-full justify-center rounded bg-coral py-1 text-white hover:bg-grape "

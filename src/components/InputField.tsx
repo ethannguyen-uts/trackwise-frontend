@@ -6,7 +6,7 @@ type InputFieldProps = {
   type?: string
   label?: string
   istextarea?: 'true' | 'false'
-  validate?: (value: any) => undefined | string | Promise<any>
+  validate?: (value: any) => (string | Promise<any> | undefined) | undefined
 } & InputHTMLAttributes<HTMLInputElement> &
   TextareaHTMLAttributes<HTMLTextAreaElement>
 

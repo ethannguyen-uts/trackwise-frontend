@@ -10,30 +10,38 @@ const Home: NextPage = () => {
   const router = useRouter()
   return (
     <Wrapper>
-      <div className="flex h-full flex-col flex-wrap content-center items-center justify-center pt-16">
-        <h1 className="mb-5 text-center font-serif text-6xl font-bold">
-          Shop and save money with On Track
-        </h1>
-        <h2 className="mx-2 font-serif">
-          On Track sets an alert on your favourite product & notifies you when
-          prices drop.
-        </h2>
-        <button
-          onClick={() => {
-            if (data?.me) router.push('./products')
-            else router.push('./login')
-          }}
-          className="mt-3 box-border flex justify-center rounded bg-sky py-1 px-4 text-center text-sm text-white hover:bg-blueberry"
-          type="submit"
-        >
-          Getting Started
-        </button>
+      <div className="flex h-full flex-col content-center items-center justify-center pt-16">
+        <div className="mx-2 flex h-4/6 flex-col content-center justify-center">
+          <h1 className="text-center font-serif text-3xl font-bold sm:text-6xl">
+            Shop and save money with
+          </h1>
+          <h1 className="mb-5 text-center font-serif text-3xl font-bold text-coral sm:text-6xl">
+            Track Wise
+          </h1>
+          <h2 className="mx-2 text-center font-serif text-lg sm:text-xl">
+            Track Wise sets an alert on your favourite product & notifies you
+            when prices drop.
+          </h2>
+          <button
+            onClick={() => {
+              if (data?.me) router.push('./products')
+              else router.push('./login')
+            }}
+            className="mx-auto mt-3 box-border w-32 rounded bg-coral py-1 px-1 text-center text-sm text-white hover:bg-grape"
+            type="submit"
+          >
+            Getting Started
+          </button>
+        </div>
+
         <div className="mt-20 flex flex-col">
-          <h2 className="text-center font-serif text-2xl">Brand</h2>
-          <div className="rounded bg-red-200 p-2">
+          <h2 className="text-center font-serif text-lg sm:text-xl">
+            Supported Store
+          </h2>
+          <div className="rounded bg-red-300 p-2">
             <img
               alt="Woolworths brand"
-              className="h-16 w-full object-contain"
+              className="h-14 w-full object-contain"
               src="https://cdn0.woolworths.media/content/content/icon-header-logo.png"
             />
           </div>

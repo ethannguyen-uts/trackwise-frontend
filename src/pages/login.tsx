@@ -54,6 +54,7 @@ export const Login: React.FC<registerProps> = ({}) => {
                 <div className=" mb-2 block w-full text-right text-sm text-coral hover:underline">
                   <Link href="/forgot-password">Forgot password?</Link>
                 </div>
+
                 {error && <label className="text-red-600">{error}</label>}
                 <button
                   className="flex w-full justify-center rounded bg-coral py-1 text-white hover:bg-grape"
@@ -62,6 +63,9 @@ export const Login: React.FC<registerProps> = ({}) => {
                   {isSubmitting ? <LoadingIcon /> : null}
                   {isSubmitting ? 'Loading' : 'Login'}
                 </button>
+                <div className=" mt-2 block w-full text-right text-sm text-coral hover:underline">
+                  <Link href="/register">Don't have an account?</Link>
+                </div>
               </Form>
             </div>
           </Wrapper>
