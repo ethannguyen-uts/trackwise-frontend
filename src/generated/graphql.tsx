@@ -39,17 +39,13 @@ export type Mutation = {
   addProduct: Product;
   changePassword?: Maybe<UserResponse>;
   confirmUser: Scalars['Boolean'];
-  createPost: Post;
   createUser: User;
-  deletePost: Scalars['Boolean'];
   deleteProduct: Scalars['Boolean'];
   forgotPassword: Scalars['Boolean'];
   login: LoginResponse;
   logout: Scalars['Boolean'];
   register: RegisterResponse;
-  updatePost: Post;
   updateProductTargetPrice: Product;
-  vote: Scalars['Boolean'];
 };
 
 
@@ -68,18 +64,8 @@ export type MutationConfirmUserArgs = {
 };
 
 
-export type MutationCreatePostArgs = {
-  input: PostInput;
-};
-
-
 export type MutationCreateUserArgs = {
   data: RegisterInput;
-};
-
-
-export type MutationDeletePostArgs = {
-  id: Scalars['Int'];
 };
 
 
@@ -104,50 +90,13 @@ export type MutationRegisterArgs = {
 };
 
 
-export type MutationUpdatePostArgs = {
-  id: Scalars['Int'];
-  title: Scalars['String'];
-};
-
-
 export type MutationUpdateProductTargetPriceArgs = {
   id: Scalars['ID'];
   targetPrice: Scalars['Float'];
 };
 
-
-export type MutationVoteArgs = {
-  postId: Scalars['ID'];
-  value: Scalars['Int'];
-};
-
-export type PaginatedPosts = {
-  __typename?: 'PaginatedPosts';
-  hasMore: Scalars['Boolean'];
-  posts: Array<Post>;
-};
-
 export type PasswordInput = {
   password: Scalars['String'];
-};
-
-export type Post = {
-  __typename?: 'Post';
-  created_at: Scalars['DateTime'];
-  creator: User;
-  creatorId: Scalars['Float'];
-  id: Scalars['ID'];
-  points: Scalars['Float'];
-  text: Scalars['String'];
-  textSnippet: Scalars['String'];
-  title: Scalars['String'];
-  updated_at: Scalars['DateTime'];
-  voteStatus?: Maybe<Scalars['Int']>;
-};
-
-export type PostInput = {
-  text: Scalars['String'];
-  title: Scalars['String'];
 };
 
 export type Product = {
@@ -169,23 +118,10 @@ export type Product = {
 
 export type Query = {
   __typename?: 'Query';
-  helloWorld: Scalars['String'];
   me?: Maybe<User>;
-  post: Post;
-  posts: PaginatedPosts;
   product: Product;
   products: Array<Product>;
-};
-
-
-export type QueryPostArgs = {
-  id: Scalars['Int'];
-};
-
-
-export type QueryPostsArgs = {
-  cursor?: InputMaybe<Scalars['String']>;
-  limit: Scalars['Int'];
+  scrapeAllProduct: Scalars['String'];
 };
 
 
@@ -205,15 +141,6 @@ export type RegisterResponse = {
   __typename?: 'RegisterResponse';
   errors?: Maybe<Array<FieldError>>;
   user?: Maybe<User>;
-};
-
-export type Updoot = {
-  __typename?: 'Updoot';
-  post: Post;
-  postId: Scalars['Float'];
-  user: User;
-  userId: Scalars['Float'];
-  value: Scalars['Float'];
 };
 
 export type User = {
@@ -236,8 +163,6 @@ export type UserResponse = {
 
 export type FieldErrorFragmentFragment = { __typename?: 'FieldError', field: string, error: string };
 
-export type PostSnippetFragmentFragment = { __typename?: 'Post', id: string, title: string, created_at: any, updated_at: any, textSnippet: string, text: string, points: number, voteStatus?: number | null, creator: { __typename?: 'User', id: string, username: string } };
-
 export type ProductFragmentFragment = { __typename?: 'Product', id: string, name: string, url: string, imageUrl: string, scrapePrice: number, currentPrice: number, targetPrice: number, status: string, userId: string, updated_at: any };
 
 export type UserFragmentFragment = { __typename?: 'User', id: string, username: string, email: string, firstName: string, lastName: string, name: string };
@@ -255,13 +180,6 @@ export type ChangePasswordMutationVariables = Exact<{
 
 
 export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword?: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, error: string }> | null, user?: { __typename?: 'User', id: string, username: string, email: string, firstName: string, lastName: string, name: string } | null } | null };
-
-export type CreatePostMutationVariables = Exact<{
-  input: PostInput;
-}>;
-
-
-export type CreatePostMutation = { __typename?: 'Mutation', createPost: { __typename?: 'Post', id: string, title: string, text: string, creatorId: number, points: number, updated_at: any, created_at: any } };
 
 export type DeleteProductMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -298,14 +216,6 @@ export type UpdateProductTargetPriceMutationVariables = Exact<{
 
 export type UpdateProductTargetPriceMutation = { __typename?: 'Mutation', updateProductTargetPrice: { __typename?: 'Product', id: string, name: string, url: string, imageUrl: string, scrapePrice: number, currentPrice: number, targetPrice: number, status: string, userId: string, updated_at: any } };
 
-export type VoteMutationVariables = Exact<{
-  postId: Scalars['ID'];
-  value: Scalars['Int'];
-}>;
-
-
-export type VoteMutation = { __typename?: 'Mutation', vote: boolean };
-
 export type ForgotPasswordMutationVariables = Exact<{
   email: Scalars['String'];
 }>;
@@ -318,14 +228,6 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, username: string, email: string, firstName: string, lastName: string, name: string } | null };
 
-export type PostsQueryVariables = Exact<{
-  limit: Scalars['Int'];
-  cursor?: InputMaybe<Scalars['String']>;
-}>;
-
-
-export type PostsQuery = { __typename?: 'Query', posts: { __typename?: 'PaginatedPosts', hasMore: boolean, posts: Array<{ __typename?: 'Post', id: string, title: string, created_at: any, updated_at: any, textSnippet: string, text: string, points: number, voteStatus?: number | null, creator: { __typename?: 'User', id: string, username: string } }> } };
-
 export type ProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -335,22 +237,6 @@ export const FieldErrorFragmentFragmentDoc = gql`
     fragment FieldErrorFragment on FieldError {
   field
   error
-}
-    `;
-export const PostSnippetFragmentFragmentDoc = gql`
-    fragment PostSnippetFragment on Post {
-  id
-  title
-  created_at
-  updated_at
-  textSnippet
-  text
-  points
-  voteStatus
-  creator {
-    id
-    username
-  }
 }
     `;
 export const ProductFragmentFragmentDoc = gql`
@@ -404,23 +290,6 @@ ${UserFragmentFragmentDoc}`;
 
 export function useChangePasswordMutation() {
   return Urql.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument);
-};
-export const CreatePostDocument = gql`
-    mutation CreatePost($input: PostInput!) {
-  createPost(input: $input) {
-    id
-    title
-    text
-    creatorId
-    points
-    updated_at
-    created_at
-  }
-}
-    `;
-
-export function useCreatePostMutation() {
-  return Urql.useMutation<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocument);
 };
 export const DeleteProductDocument = gql`
     mutation DeleteProduct($id: ID!) {
@@ -485,15 +354,6 @@ export const UpdateProductTargetPriceDocument = gql`
 export function useUpdateProductTargetPriceMutation() {
   return Urql.useMutation<UpdateProductTargetPriceMutation, UpdateProductTargetPriceMutationVariables>(UpdateProductTargetPriceDocument);
 };
-export const VoteDocument = gql`
-    mutation Vote($postId: ID!, $value: Int!) {
-  vote(postId: $postId, value: $value)
-}
-    `;
-
-export function useVoteMutation() {
-  return Urql.useMutation<VoteMutation, VoteMutationVariables>(VoteDocument);
-};
 export const ForgotPasswordDocument = gql`
     mutation ForgotPassword($email: String!) {
   forgotPassword(email: $email)
@@ -513,20 +373,6 @@ export const MeDocument = gql`
 
 export function useMeQuery(options?: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'>) {
   return Urql.useQuery<MeQuery>({ query: MeDocument, ...options });
-};
-export const PostsDocument = gql`
-    query Posts($limit: Int!, $cursor: String) {
-  posts(limit: $limit, cursor: $cursor) {
-    hasMore
-    posts {
-      ...PostSnippetFragment
-    }
-  }
-}
-    ${PostSnippetFragmentFragmentDoc}`;
-
-export function usePostsQuery(options: Omit<Urql.UseQueryArgs<PostsQueryVariables>, 'query'>) {
-  return Urql.useQuery<PostsQuery>({ query: PostsDocument, ...options });
 };
 export const ProductsDocument = gql`
     query Products {

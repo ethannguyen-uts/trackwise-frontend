@@ -1,27 +1,68 @@
-# Next.js + Tailwind CSS Example
+# Track Wise - Price Tracker App
 
-This example shows how to use [Tailwind CSS](https://tailwindcss.com/) [(v3.0)](https://tailwindcss.com/blog/tailwindcss-v3) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
+## Introduction
 
-## Preview
+Have you ever been to a Woolworths and seen things you want to purchase that are not on Sale? You may say to yourself that you will buy it next time or you may buy it anyway. Well, in both cases they are so frustrating to you :( Don't worry, we will solve those problems for you. Introducing TrackWise, a tracker price app that sets an alert on your favorite product & notifies you when prices drop. Enjoy buying things you need as soon as they are on sale
 
-Preview the example live on [StackBlitz](http://stackblitz.com/):
+This is the single web page frontend for Track Wise App. If you want to visit the backend, please follow this [link](https://github.com/ethannguyen-uts/trackwise-backend/)
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-tailwindcss)
+## Technologies
 
-## Deploy your own
+- React
+- NextJs
+- Urql Client
+- Graphql Code Generator
+- Typescript
+- Tailwind CSS
+- Formik
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
+## Features
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss&project-name=with-tailwindcss&repository-name=with-tailwindcss)
+### Pages
 
-## How to use
+The project has following pages:
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
+- Landing page
+- Signup
+- Login
+- Forgot Password
+- Change Password
+- Products Page
 
-```bash
-npx create-next-app --example with-tailwindcss with-tailwindcss-app
-# or
-yarn create next-app --example with-tailwindcss with-tailwindcss-app
-```
+#### Landing Page
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+A single page that introduces about the Track Price App.
+![gif landing page](/assets/landingpage.png?raw=true)
+
+#### Sign Up
+
+User input their personal information to set up their account, user needs to provide their email so that the app can send them a notification whenever the price of the product is dropped.
+
+![gif signup](/assets/signup.gif)
+
+#### Log in
+
+After the user login, the graphql server sends a cookie to the browser that contains an encrypted value of the session created on the server. The browser will send this cookie with every user request for authentication purposes.
+
+![gif login](/assets/login.gif)
+
+#### Forgot password
+
+The user inputs their email information, an email will send to the user so that the user can follow the link to reset their password.
+![gif login](/assets/forgotpassword.gif)
+
+#### Products Page
+
+![png product page](/assets/productspage.png)
+
+The products page allows the user to input a product URL (Currently supports Woolworth products). After clicking the Scrape button on Scrape Bar, the client execute the add product mutation, the graphql server performs the scrape function to get the product's name, picture, current price. Users can update their desired price on the products page. The backend graphql server scheduled run scrape jobs (every 12 hours) on every users' product and if the price on the website is dropped and meets the user's target price, a notification email will be sent to the user.
+
+![gif products page](/assets/productspage.gif)
+
+### Reponsive
+
+![gif reponsive](/assets/reponsive.gif)
+
+### Deploy
+
+The project was deployed on: https://blankspacex.com/

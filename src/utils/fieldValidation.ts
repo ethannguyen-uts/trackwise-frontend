@@ -12,7 +12,7 @@ const validateUsername = (value: string): string => {
   )
   if (!value) {
     error = 'Required'
-  } else if (regex.test(value)) {
+  } else if (!regex.test(value)) {
     error = 'Invalid user name'
   }
   return error

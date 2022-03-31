@@ -68,7 +68,7 @@ export const Product: React.FC<ProductProps> = (props) => {
         <span className="text-xs">
           Last update: {new Date(product.updated_at).toLocaleString()}
         </span>
-        <h2 className="mb-2 font-serif text-lg font-bold hover:cursor-pointer hover:underline sm:h-20">
+        <h2 className="mb-2 font-serif text-base font-bold hover:cursor-pointer hover:underline sm:h-20">
           <a href={product.url} target="_blank" rel="noopener noreferrer">
             {product.name}
           </a>

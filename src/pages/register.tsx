@@ -97,7 +97,7 @@ export const Register: React.FC<registerProps> = ({}) => {
                 <InputField
                   name="password"
                   label="Password"
-                  type="text"
+                  type="password"
                 ></InputField>
                 <button
                   className="m-auto flex w-full justify-center rounded bg-coral py-1 text-white hover:bg-grape "
