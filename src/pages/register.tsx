@@ -10,7 +10,6 @@ import { withUrqlClient } from 'next-urql'
 import { createUrqlClient } from '../utils/createUrqlClient'
 import { getGraphqlErrors } from '../utils/getGraphQLErrors'
 import {
-  isEmptyString,
   validateEmail,
   validatePassword,
   validateUsername,
