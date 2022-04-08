@@ -2,14 +2,15 @@
 
 ## Introduction
 
-Have you ever been to a Woolworths and seen things you want to purchase that are not on Sale? You may say to yourself that you will buy it next time or you may buy it anyway. Well, in both cases they are so frustrating to you :( Don't worry, we will solve those problems for you. Introducing TrackWise, a tracker price app that sets an alert on your favorite product & notifies you when prices drop. Enjoy buying things you need as soon as they are on sale
+Have you ever been to a Woolworths and seen things you want to purchase that are not on Sale? What would you do in those situations? You may turn it off and wait for the next time or you may have to buy it anyway. Well, we probably have an unpleasant feeling in both cases.
+To solve that problem, we developed Trackwise - a price tracker app that allows you to sets an alert on your favorite product & notifies you when prices drop. Enjoy buying things you need as soon as they are on Sale!
 
-This is the single web page frontend for Track Wise App. If you want to visit the backend, please follow this [link](https://github.com/ethannguyen-uts/trackwise-backend/)
+This is the single web page frontend for Track Wise App. If you want to visit the backend, please follow this [link](https://github.com/ethannguyen-uts/trackwise-backend/).
 
 ## Technologies
 
 - React
-- NextJs
+- NextJS
 - Urql Client
 - Graphql Code Generator
 - Typescript
@@ -20,19 +21,25 @@ This is the single web page frontend for Track Wise App. If you want to visit th
 
 ### Pages
 
-The project has following pages:
+The project has the following pages:
 
 - Landing page
+- Products Page
 - Signup
 - Login
 - Forgot Password
 - Change Password
-- Products Page
 
 #### Landing Page
 
-A single page that introduces about the Track Price App.
+A single page that introduces the Track Price App.
 ![gif landing page](/assets/landingpage.png?raw=true)
+
+#### Products Page
+
+![png product page](/assets/productspage.png)
+
+The products page allows the user to input a product URL (currently supports Woolworth products). After clicking the Scrape button on Scrape Bar, the client executes the "Add Product" mutation, the Graphql server runs the scrape function to get the product's name, picture, current price, and displays on the page. Users can update the target price for their product. The backend graphql server scheduled run scheduled jobs to scrape all users' products' prices every 12 hours. If the price is dropped and meets the user's target price, a notification email will be sent to the user.
 
 #### Sign Up
 
@@ -51,15 +58,9 @@ After the user login, the graphql server sends a cookie to the browser that cont
 The user inputs their email information, an email will send to the user so that the user can follow the link to reset their password.
 ![gif login](/assets/forgotpassword.gif)
 
-#### Products Page
-
-![png product page](/assets/productspage.png)
-
-The products page allows the user to input a product URL (Currently supports Woolworth products). After clicking the Scrape button on Scrape Bar, the client execute the add product mutation, the graphql server performs the scrape function to get the product's name, picture, current price. Users can update their desired price on the products page. The backend graphql server scheduled run scrape jobs (every 12 hours) on every users' product and if the price on the website is dropped and meets the user's target price, a notification email will be sent to the user.
-
 ![gif products page](/assets/productspage.gif)
 
-### Reponsive
+### Reponsive Design
 
 ![gif reponsive](/assets/reponsive.gif)
 
