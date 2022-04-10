@@ -8,7 +8,7 @@ const isEmptyString = (value: string): string => {
 const validateUsername = (value: string): string => {
   let error = ''
   const regex = new RegExp(
-    `^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$`
+    `^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$`
   )
   if (!value) {
     error = 'Required'
