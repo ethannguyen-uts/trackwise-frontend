@@ -41,6 +41,8 @@ A single page that introduces the Track Price App.
 
 The products page allows the user to input a product URL (currently supports Woolworth products). After clicking the Scrape button on Scrape Bar, the client executes the "Add Product" mutation, the Graphql server runs the scrape function to get the product's name, picture, current price, and displays on the page. Users can update the target price for their product. The backend graphql server scheduled run scheduled jobs to scrape all users' products' prices every 12 hours. If the price is dropped and meets the user's target price, a notification email will be sent to the user.
 
+![gif products page](/assets/productspage.gif)
+
 #### Sign Up
 
 User input their personal information to set up their account, user needs to provide their email so that the app can send them a notification whenever the price of the product is dropped.
@@ -57,8 +59,6 @@ After the user login, the graphql server sends a cookie to the browser that cont
 
 The user inputs their email information, an email will send to the user so that the user can follow the link to reset their password.
 ![gif login](/assets/forgotpassword.gif)
-
-![gif products page](/assets/productspage.gif)
 
 ### Reponsive Design
 
